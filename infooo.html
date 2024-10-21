@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Sites by Department</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .pdf-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4caf50; /* Added missing semicolon */
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px; /* Added missing semicolon */
+        }
+        .pdf-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Internship Sites by Department</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Internship Title</th>
+                    <th>Name of Internship Site</th>
+                    <th>Site Location</th>
+                    <th>Internship Term</th>
+                </tr>
+            </thead>
+            <tbody id="internshipTable">
+                <!-- Dynamic Data Rows -->
+            </tbody>
+        </table>
+        <button class="pdf-button" onclick="generatePDF()">Download as PDF</button>
+    </div>
+
+    <script>
+        // Data for the internships
+        const internships = [
+            { title: 'Application Developer Intern, Business Systems', site: 'Minnesota Twins Baseball Club', location: 'Minneapolis, MN', term: 'Fall 2023' },
+            { title: 'Associate Software Engineer II', site: 'SPS Commerce', location: 'Minneapolis, MN', term: 'Fall 2023' },
+            { title: 'System/Network Admin Internship', site: 'TAAJ Services', location: 'Minneapolis, MN', term: 'Fall 2023' },
+            { title: 'IT Infrastructure Analyst', site: 'Cameo Technologies LLC', location: 'Minnesota', term: 'Fall 2023' },
+            { title: 'Web Developer Internship', site: 'Global Envios Express', location: 'Minneapolis, MN', term: 'Fall 2023' },
+            { title: 'Software Developer Internship', site: 'CHS Inc', location: 'Inver Grove Heights, MN', term: 'Fall 2023' },
+            { title: 'Data Analytics Internship', site: 'St. Paul College', location: 'St. Paul, MN', term: 'Fall 2023' },
+            { title: 'Front End Developer', site: 'GBSC Group SkyIT', location: 'Calgary, AB (Remote)', term: 'Summer 2023' },
+            { title: 'Computer Applications Development', site: 'Bridgestone', location: 'Nashville, TN (Hybrid)', term: 'Summer 2023' },
+            { title: 'Full Stack Web Development Internship', site: 'Radiation Products Design, Inc', location: 'Albertville, MN', term: 'Summer 2023' },
+            { title: 'Innovation in XR & Robotics', site: 'Bridgestone', location: 'Nashville, TN (Hybrid)', term: 'Spring 2023' },
+            { title: 'ERP Analysis', site: 'The Vomela Companies', location: 'St. Paul, MN', term: 'Spring 2023' },
+            { title: 'Team Lead', site: 'Pearson Vue', location: 'Bloomington, MN', term: 'Spring 2023' },
+            { title: 'Engineering Associate', site: 'Wells Fargo', location: 'St. Louis Park, MN', term: 'Spring 2023' },
+            { title: 'ISS Architecture Solution Intern', site: 'US Bank', location: 'Minneapolis, MN', term: 'Spring 2023' },
+            { title: 'Front End Developer', site: 'Railbox Consulting', location: 'Minneapolis, MN', term: 'Spring 2023' },
+            { title: 'Software Engineering Internship', site: 'Optum', location: 'Eden Prairie, MN', term: 'Fall 2022' },
+            { title: 'Technology Development Internship', site: 'United Health Group', location: 'Minnetonka, MN', term: 'Fall 2022' },
+            { title: 'Web Development', site: 'Highpower Data Solutions', location: 'Champlin, MN', term: 'Spring 2022' }
+        ];
+
+        // Function to populate table with data
+        const internshipTable = document.getElementById('internshipTable');
+
+        internships.forEach(internship => {
+            const row = `<tr>
+                            <td>${internship.title}</td>
+                            <td>${internship.site}</td>
+                            <td>${internship.location}</td>
+                            <td>${internship.term}</td>
+                         </tr>`;
+            internshipTable.innerHTML += row;
+        });
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.text("Internship Sites by Department", 20, 20);
+            
+            let y = 40; // Vertical starting point for the table
+
+            internships.forEach(internship => {
+                doc.text(`Title: ${internship.title}`, 20, y);
+                doc.text(`Site: ${internship.site}`, 20, y + 10);
+                doc.text(`Location: ${internship.location}`, 20, y + 20);
+                doc.text(`Term: ${internship.term}`, 20, y + 30);
+                y += 40; // Increment y to move down for the next entry
+            });
+
+            doc.save('internships.pdf'); // Save the generated PDF
+        }
+    </script>
+
+</body>
+</html>
